@@ -11,17 +11,12 @@ pipeline {
             steps { 
 
                 sh 'mvn clean package'
-
-                 
-
+     
             }
 
             post {
-
                 success {
-
                     echo 'Now Archiving...'
-
                     archiveArtifacts artifacts :  '**/target/*.war'
 
                 }
@@ -30,7 +25,14 @@ pipeline {
 
         }
 
-        
+       stage('sonarqube'){
+          steps { 
+
+                sh 'mvn verify sonar:sonar'
+     
+            }
+           
+        }
 
     }
 
