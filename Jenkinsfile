@@ -42,7 +42,14 @@ pipeline {
             }
             
         }
+        stage(' Tag Dockerfile'){
+          steps { 
 
+                sh  'docker tag $(docker images | grep \'<none>\' | head -n 1 | awk \'{print $3}\') java-app:${BUILD_ID}'
+     
+            }
+            
+        }
     }
 
 }
