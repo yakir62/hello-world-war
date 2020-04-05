@@ -50,6 +50,16 @@ pipeline {
             }
             
         }
+          stage(' Push image to Nexus'){
+          steps {
+            sh '''docker login -u admin -p v5nvlirlom5 10.0.0.25:8083 
+                                         docker tag java-app:${BUILD_ID} 10.0.0.25:8083/java-app:${BUILD_ID}
+                                         docker push 10.0.0.25:8083/java-app:${BUILD_ID}
+                                         docker rmi $(docker images --filter=reference="10.0.0.25:8083/java-app*" -q) -f
+                                         docker logout 10.0.0.25'''
+             
+          }
+       }
     }
 
 }
